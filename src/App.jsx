@@ -1,35 +1,40 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import Header from "./components/ui/Header.jsx";
+import { Button } from "./components/ui/button.tsx";
+import { Particles } from "./components/magicui/particles.tsx";
+import kennehPic from "./assets/kenneh_profile_pic.jpg";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Header />
+      <main>
+        <section className="titleSection">
+          <img
+            src={kennehPic}
+            style={{
+              border: "8px round white",
+              borderRadius: "12px",
+              width: "120px",
+              maxWidth: "100%",
+              height: "auto",
+            }}
+          />
+          <h3>Hello! My name is</h3>
+          <br></br>
+          <h1>
+            <span>K</span>
+            <span>e</span>
+            <span>n</span>
+            <span>n</span>
+            <span>y</span>
+          </h1>
+          <div style={{ fontSize: "24px" }}>
+            Video Editor • Graphic Designer • Developer
+          </div>
+        </section>
+      </main>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
