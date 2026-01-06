@@ -1,0 +1,18 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  overflow: hidden; /* Removes any scrollbars */
+}
+
+.webgl {
+  /* assuming you add a 'webgl' class to your canvas or select it directly */
+  position: fixed;
+  top: 0;
+  left: 0;
+  outline: none; /* Removes the blue outline when clicking/dragging in some browsers */
+  display: block; /* Fixes an occasional small space at the bottom of the canvas */
+}

@@ -13,15 +13,21 @@ export function createHubObjects() {
   const items = [
     {
       name: "multimedia",
-      path: "/assets/models/clapper.glb",
+      path: "src/assets/models/paintbrush.glb",
+      scale: 1.7, // slightly bigger
+      y: 0.5, // default Y position
     },
     {
       name: "game",
-      path: "/assets/models/joystick.glb",
+      path: "src/assets/models/nes_controller.glb",
+      scale: 0.1, // scale down controller
+      y: 0.0, // we'll override below to lift it
     },
     {
       name: "software",
-      path: "/assets/models/terminal.glb",
+      path: "src/assets/models/computer.glb",
+      scale: 1.5, // medium size
+      y: 1.0, // default Y position
     },
   ];
 
@@ -32,9 +38,15 @@ export function createHubObjects() {
     loader.load(item.path, (gltf) => {
       const model = gltf.scene;
 
-      // Basic normalization
-      model.scale.setScalar(1.5);
-      model.position.y = 0;
+      // Apply individual scaling
+      model.scale.setScalar(item.scale);
+
+      // Set default Y position
+      if (item.name === "game") {
+        model.position.y = 2; // lift the controller to match other objects
+      } else {
+        model.position.y = item.y;
+      }
 
       // Roulette positioning
       const angle = index * angleStep;
@@ -42,7 +54,6 @@ export function createHubObjects() {
       model.position.z = Math.sin(angle) * radius;
 
       model.name = item.name;
-
       group.add(model);
     });
   });
