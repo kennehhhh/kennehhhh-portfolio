@@ -7,7 +7,63 @@
     <link rel="stylesheet" href="/src/style.css" />
   </head>
   <body>
-    <canvas id="app"></canvas>
+    <section id="hero">
+      <div class="hero-content">
+        <h1>KENNEHHHH</h1>
+        <p class="subtitle">Pixel Hub & Digital Portfolio</p>
+        <p class="description">
+          Creative Developer specializing in 3D Web Experiences.
+        </p>
+      </div>
+
+      <div class="scroll-indicator">
+        <span>↓ Scroll to Explore Skills</span>
+      </div>
+    </section>
+
+    <section id="roulette">
+      <canvas id="app"></canvas>
+
+      <button
+        id="nav-left"
+        class="nav-arrow left-arrow"
+        aria-label="Rotate Left"
+      >
+        &#10094;
+      </button>
+
+      <button
+        id="nav-right"
+        class="nav-arrow right-arrow"
+        aria-label="Rotate Right"
+      >
+        &#10095;
+      </button>
+
+      <div class="role-header">
+        <div class="static-text">I'm a</div>
+
+        <div class="scrolling-text-mask">
+          <ul class="role-list" id="role-list">
+            <li>Software Developer</li>
+            <li>Game Developer</li>
+            <li>Graphic Designer</li>
+            <li>Video Editor</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="action-container">
+        <a id="project-btn" href="#" class="retro-btn"> View Project </a>
+      </div>
+
+      <div class="controls-hint">
+        <p>
+          Use <strong>Arrow Keys</strong> or <strong>Swipe</strong> to Rotate
+        </p>
+      </div>
+    </section>
+
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
