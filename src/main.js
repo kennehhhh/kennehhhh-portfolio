@@ -1,6 +1,7 @@
 import "./style.css";
 import * as THREE from "three";
 import { createHubObjects } from "./scenes/hub/hubObjects.js";
+import { createHeroObjects } from "./scenes/hub/heroObjects.js";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { OutlinePass } from "three/examples/jsm/postprocessing/OutlinePass.js";
@@ -375,3 +376,89 @@ function animate() {
 setControls();
 animate();
 updateHeaderUI();
+
+/* =========================================================================
+   NEW: HERO SECTION LOGIC (Independent 3D Instance)
+   ========================================================================= */
+
+(function initHeroSection() {
+  const canvas = document.getElementById("hero-canvas");
+  if (!canvas) return;
+
+  // 1. Create a separate Renderer for this canvas
+  const heroRenderer = new THREE.WebGLRenderer({
+    canvas: canvas,
+    antialias: true,
+    alpha: true, // Allows CSS background to show through
+  });
+  heroRenderer.setSize(canvas.clientWidth, canvas.clientHeight);
+  heroRenderer.setPixelRatio(window.devicePixelRatio);
+
+  // 2. Create a separate Scene
+  const heroScene = new THREE.Scene();
+
+  // 3. Create a separate Camera
+  const heroCamera = new THREE.PerspectiveCamera(
+    50,
+    canvas.clientWidth / canvas.clientHeight,
+    0.1,
+    100
+  );
+  heroCamera.position.set(0, 2.5, 12); // Same starting position logic
+
+  // 4. Add Lights (Local to this scene)
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+  heroScene.add(ambientLight);
+
+  const spotLight = new THREE.SpotLight(0xffffff, 100);
+  spotLight.position.set(5, 10, 5);
+  heroScene.add(spotLight);
+
+  // 5. Add the Hero Objects
+  // We call your existing function, but add it to THIS scene, not the global one
+  const heroGroup = createHeroObjects();
+
+  // POSITIONING: Since this is a new world, (0,0,0) is the center of the Hero Section.
+  heroGroup.position.set(4, -2, 0); // Move right, adjust Y to floor
+  heroGroup.rotation.y = -0.5; // Face slightly left
+
+  // Make sure body is visible immediately (since we removed intro logic)
+  // We need to wait for loader, or check periodically, or just set it if available
+  // Simple check in the loop below handles it.
+
+  heroScene.add(heroGroup);
+
+  // 6. Independent Resize Logic
+  window.addEventListener("resize", () => {
+    const width = canvas.clientWidth;
+    const height = canvas.clientHeight;
+    heroRenderer.setSize(width, height);
+    heroCamera.aspect = width / height;
+    heroCamera.updateProjectionMatrix();
+  });
+
+  // 7. Independent Animation Loop
+  const heroClock = new THREE.Clock();
+
+  function animateHero() {
+    requestAnimationFrame(animateHero);
+    const elapsed = heroClock.getElapsedTime();
+
+    // Check if models are loaded and force body visible
+    const body = heroGroup.getObjectByName("mc_body");
+    const head = heroGroup.getObjectByName("mc_head");
+
+    if (body) body.visible = true;
+
+    // Simple Floating Animation
+    if (head && body) {
+      const hover = Math.sin(elapsed * 1.5) * 0.05;
+      head.position.y = 2.2 + hover; // Head base height
+      body.position.y = 0 + hover; // Body base height
+    }
+
+    heroRenderer.render(heroScene, heroCamera);
+  }
+
+  animateHero();
+})();

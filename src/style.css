@@ -18,7 +18,6 @@ body {
 }
 
 /* --- 1. HERO SECTION --- */
-/* --- 1. HERO SECTION --- */
 #hero {
   height: 100vh;
   display: flex;
@@ -32,6 +31,16 @@ body {
 
   /* NEW: Prevent content from touching the very edges */
   padding: 0 20px;
+}
+
+#hero-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Puts it behind the text */
+  outline: none;
 }
 
 /* NEW: Constrain the content width */
@@ -132,31 +141,33 @@ body {
 
 /* --- THE BUTTON --- */
 .retro-btn {
-  pointer-events: auto; /* Re-enable clicks for the button */
+  pointer-events: auto; /* Re-enable clicks for the button itself */
 
   /* Style */
-  background-color: white;
-  color: #0f0f0f;
+  background-color: transparent;
+  color: white;
   padding: 12px 30px;
   font-family: "Arial", sans-serif;
   font-weight: bold;
-  text-decoration: none;
+  text-decoration: none; /* Removes underline */
   border-radius: 30px;
   border: 2px solid white;
 
   /* HOVER TRANSITION (Subtle Growth) */
-  transition: transform 0.2s ease, background-color 0.2s;
+  transition: all 0.2s ease;
 }
 
 /* Hover State */
 .retro-btn:hover {
-  transform: scale(1.1); /* The "Subtle Increase" */
-  background-color: #0f0f0f;
-  color: white;
+  transform: scale(1.1);
+  background-color: white;
+  color: #0f0f0f;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
   cursor: pointer;
 }
 
 /* --- THE BOUNCE ANIMATION CLASS --- */
+/* This is triggered by JS when the text changes */
 .pop-anim {
   animation: popBounce 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
@@ -295,3 +306,134 @@ body {
   }
 }
 */
+
+/* --- CONTACT SECTION --- */
+#contact {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 80px 20px;
+  background-color: #0f0f0f;
+  border-top: 1px solid #222;
+  text-align: center;
+}
+
+.contact-content {
+  max-width: 800px;
+  width: 100%;
+}
+
+/* Status Badge */
+.status-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 8px 16px;
+  border-radius: 20px;
+  margin-bottom: 2rem;
+  border: 1px solid #333;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #4db6ac;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #4db6ac;
+  animation: pulse-dot 2s infinite;
+}
+
+@keyframes pulse-dot {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.status-text {
+  font-size: 0.9rem;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+#contact h2 {
+  font-size: clamp(2.5rem, 8vw, 4.5rem);
+  font-weight: 800;
+  margin-bottom: 3rem;
+  line-height: 1.1;
+}
+
+.highlight {
+  color: #4db6ac; /* Matches your Roulette text color */
+}
+
+/* Copy Email Button */
+.copy-btn {
+  background: transparent;
+  color: white;
+  border: 2px solid white; /* Matches your 3D outline style */
+  padding: 20px 40px;
+  font-size: clamp(1rem, 3vw, 1.5rem);
+  font-family: inherit;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.copy-btn:hover {
+  background: white;
+  color: #0f0f0f;
+  transform: translateY(-5px);
+}
+
+.copy-status {
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.8rem;
+  color: #666;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.copy-btn:hover .copy-status {
+  opacity: 1;
+}
+
+/* Social Links */
+.social-grid {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 4rem;
+}
+
+.social-link {
+  color: #666;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+.social-link:hover {
+  color: white;
+}
+
+.mini-footer {
+  margin-top: auto;
+  padding-top: 60px;
+  font-size: 0.8rem;
+  color: #444;
+}
